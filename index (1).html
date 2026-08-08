@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Twin Profile - Meet Your AI Twin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2170e4;
+            --primary-dark: #0058be;
+            --secondary: #0b1c30;
+            --text-dark: #0b1c30;
+            --text-light: #45464d;
+            --bg-light: #f8f9ff;
+            --bg-section: #eff4ff;
+            --border-light: rgba(198, 198, 205, 0.5);
+            --blue-light: #d3e4fe;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(90deg, #f8f9ff 0%, #ffffff 100%);
+            overflow-x: hidden;
+        }
+
+        /* Header/Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(248, 249, 255, 0.8);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(198, 198, 205, 0.3);
+            z-index: 1000;
+            padding: 0 24px;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-dark);
+            letter-spacing: -0.24px;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            flex: 1;
+            margin-left: 80px;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.6px;
+            color: var(--text-light);
+            transition: color 0.3s;
+            padding-bottom: 6px;
+        }
+
+        nav a:hover {
+            color: var(--primary-dark);
+        }
+
+        nav a.active {
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-dark);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-login {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 9999px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: rgba(0, 88, 190, 0.1);
+        }
+
+        .btn-signup {
+            background: #131b2e;
+            color: #7c839b;
+            border: none;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 9999px;
+            transition: all 0.3s;
+        }
+
+        .btn-signup:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 64px;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 96px 24px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 52.8px;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            letter-spacing: -0.96px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(33, 112, 228, 0.1);
+            border: 1px solid rgba(0, 88, 190, 0.2);
+            padding: 5px 13px;
+            border-radius: 9999px;
+            margin-bottom: 24px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primary-dark);
+            letter-spacing: 0.6px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 25.6px;
+            margin-bottom: 32px;
+            max-width: 576px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 9999px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0px 4px 7px rgba(33, 112, 228, 0.39);
+            transition: all 0.3s;
+            text-decoration: none;
+            letter-spacing: 0.6px;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0px 8px 16px rgba(33, 112, 228, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-dark);
+            border: 1px solid #76777d;
+            padding: 13px 25px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.6px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 88, 190, 0.05);
+            border-color: var(--primary-dark);
+        }
+
+        .arrow-icon::after {
+            content: "→";
+            margin-left: 4px;
+        }
+
+        .hero-visual {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            height: 500px;
+            background: linear-gradient(135deg, #e8f1ff 0%, #f0f6ff 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0px 10px 30px -10px rgba(33, 112, 228, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .visual-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .visual-content h3 {
+            font-size: 28px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .visual-content p {
+            color: var(--text-light);
+            font-size: 14px;
+            max-width: 300px;
+        }
+
+        .floating-card {
+            position: absolute;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 17px;
+            box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+
+        .floating-card.top-right {
+            top: 32px;
+            right: 32px;
+            width: 200px;
+        }
+
+        .floating-card.bottom-left {
+            bottom: 32px;
+            left: 32px;
+            width: 200px;
+        }
+
+        .floating-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--blue-light);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            width: 85%;
+            height: 100%;
+            background: var(--primary-dark);
+            border-radius: 9999px;
+        }
+
+        /* Features Section */
+        .features-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.24px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-light);
+            max-width: 672px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .feature-card {
+            background: var(--bg-section);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card.span-2 {
+            grid-column: span 2;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--blue-light);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.24px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 25.6px;
+            margin-bottom: 16px;
+        }
+
+        .chat-demo {
+            background: var(--bg-light);
+            border: 1px solid rgba(198, 198, 205, 0.3);
+            border-radius: 12px;
+            padding: 17px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            background: #131b2e;
+            color: #7c839b;
+        }
+
+        .ai-avatar {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .message-content {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 20px;
+            word-break: break-word;
+        }
+
+        .user-message .message-content {
+            background: var(--blue-light);
+            border-radius: 2px 8px 8px 8px;
+        }
+
+        .ai-message .message-content {
+            background: rgba(0, 88, 190, 0.05);
+            border: 1px solid rgba(0, 88, 190, 0.2);
+            border-radius: 8px 2px 8px 8px;
+        }
+
+        .feature-visual {
+            width: 100%;
+            height: 128px;
+            background: linear-gradient(135deg, #d3e4fe 0%, #c5deff 100%);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        /* Chat Section */
+        .chat-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .interactive-demo {
+            background: var(--bg-section);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .demo-info h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .demo-info p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 25.6px;
+            margin-bottom: 16px;
+        }
+
+        .chat-window {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-light);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .chat-send {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .chat-send:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background: rgba(33, 112, 228, 0.1);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-price {
+            font-size: 56px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin: 16px 0;
+        }
+
+        .pricing-price small {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin: 32px 0;
+            list-style: none;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            color: var(--text-light);
+            font-size: 14px;
+            border-bottom: 1px solid rgba(198, 198, 205, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .btn-pricing {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 9999px;
+            cursor: pointer;
+            margin-top: 32px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-pricing:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 16px rgba(33, 112, 228, 0.4);
+        }
+
+        .btn-pricing:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .form-message {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #166534;
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-stars {
+            color: #fbbf24;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 24px;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--blue-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .author-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .author-info p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .faq-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-light);
+            padding: 24px 0;
+        }
+
+        .faq-question {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            user-select: none;
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 0;
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 24px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 16px;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--bg-section);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            margin: 48px auto;
+        }
+
+        .form-section h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .form-section p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(33, 112, 228, 0.1);
+        }
+
+        .form-submit {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-submit:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            background: #dce9ff;
+            border-top: 1px solid #c6c6cd;
+            padding: 48px 24px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: flex-end;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: 0.6px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { padding: 0 16px; }
+            .header-container { height: 56px; }
+            nav { display: none; }
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 64px 16px 48px;
+                gap: 32px;
+            }
+            .hero-content h1 {
+                font-size: 32px;
+                line-height: 39.2px;
+            }
+            .hero-visual { height: 350px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .feature-card.span-2 { grid-column: span 1; }
+            .interactive-demo { grid-template-columns: 1fr; gap: 16px; }
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                text-align: center;
+            }
+            .footer-links { justify-content: center; }
+            .pricing-section,
+            .features-section,
+            .chat-section,
+            .testimonials-section,
+            .faq-section { padding: 32px 16px; }
+            .section-header h2 { font-size: 20px; }
+            .feature-card h3 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Digital Twin Profile</div>
+            <nav>
+                <a href="#features" class="active">Product</a>
+                <a href="#solutions">Solutions</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#about">About</a>
+            </nav>
+            <div class="header-buttons">
+                <button class="btn-login">Login</button>
+                <button class="btn-signup">Get Started</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>⚡</span>
+                    <span>AI Identity Platform</span>
+                </div>
+                <h1>Meet Your AI Twin</h1>
+                <p class="hero-description">Create a living digital extension of yourself. Train it on your knowledge, personality, and expertise to scale your presence and connect with others 24/7.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary arrow-icon">Create My AI Twin</button>
+                    <button class="btn-secondary">Try Demo</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-content">
+                    <h3>AEGIS AI</h3>
+                    <p>Your Digital Twin, Unlocking Infinite Potential.</p>
+                </div>
+                <div class="floating-card top-right">
+                    <div class="floating-badge">
+                        <div class="badge-dot"></div>
+                        <span>Syncing Knowledge...</span>
+                    </div>
+                </div>
+                <div class="floating-card bottom-left">
+                    <div class="floating-badge">
+                        <span>✓</span>
+                        <span>Identity Matched</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <h2>Beyond a Standard Profile</h2>
+                <p>Experience a new dimension of personal branding and interaction.</p>
+            </div>
+            <div class="features-grid">
+                <!-- Feature 1: AI Chat -->
+                <div class="feature-card span-2">
+                    <div class="feature-icon">💬</div>
+                    <h3>Interactive AI Chat</h3>
+                    <p>Allow visitors to converse with your digital twin, asking questions about your experience and insights as if they were talking to you directly.</p>
+                    <div class="chat-demo">
+                        <div class="chat-message user-message">
+                            <div class="chat-avatar user-avatar">U</div>
+                            <div class="message-content">What's your approach to UX design?</div>
+                        </div>
+                        <div class="chat-message ai-message">
+                            <div class="message-content">I believe in user-centric...</div>
+                            <div class="chat-avatar ai-avatar">AI</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Memory -->
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Deep Memory System</h3>
+                    <p>Your twin remembers context from past conversations, creating a personalized experience for every interaction.</p>
+                    <div class="feature-visual"></div>
+                </div>
+
+                <!-- Feature 3: Integration -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Profile Integration</h3>
+                    <p>Seamlessly pull data from your existing professional networks to build your twin's knowledge base instantly.</p>
+                </div>
+
+                <!-- Feature 4: Real-time -->
+                <div class="feature-card span-2">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-time Responses</h3>
+                    <p>Lightning-fast inference ensures the conversation flows naturally without awkward delays.</p>
+                    <div class="feature-visual"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Chat Section -->
+        <section class="chat-section" id="solutions">
+            <div class="section-header">
+                <h2>Experience Interactive AI</h2>
+                <p>Try our AI Twin demo and see how it works in real-time.</p>
+            </div>
+            <div class="interactive-demo">
+                <div class="demo-info">
+                    <h3>Talk to Your Digital Twin</h3>
+                    <p>Experience a real-time conversation with an AI trained on personal knowledge and communication style. Ask questions, get insights, and discover how your digital twin represents you.</p>
+                    <button class="btn-primary">Start Conversation</button>
+                </div>
+                <div class="chat-window">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message ai-message">
+                            <div class="message-content">Hi! I'm your AI Twin. Feel free to ask me anything about the Digital Twin Profile service!</div>
+                            <div class="chat-avatar ai-avatar">AI</div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Type your question...">
+                        <button class="chat-send" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-section" id="pricing">
+            <h3>Try My AI Twin for ₹1</h3>
+            <p>Get started with a limited access trial. Full features unlock after payment.</p>
+            <form id="aiForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="10-digit number">
+                </div>
+                <button type="button" class="btn-pricing" onclick="submitForm()">Access Trial & Pay ₹1</button>
+                <div class="form-message" id="formMessage"></div>
+            </form>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <div class="section-header">
+                <h2>Loved by Our Users</h2>
+                <p>See what people are saying about their AI Twin experience.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The AI Twin has completely transformed how I network. It's like having a 24/7 representative who truly understands my values and expertise."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AR</div>
+                        <div class="author-info">
+                            <h4>Arjun Rao</h4>
+                            <p>Product Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Finally, a tool that scales my personal brand without requiring me to be online all the time. Absolutely impressive technology."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SJ</div>
+                        <div class="author-info">
+                            <h4>Saira Joshi</h4>
+                            <p>Entrepreneur</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The conversations feel natural and authentic. Visitors genuinely believe they're talking to me. This is the future of personal branding."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MK</div>
+                        <div class="author-info">
+                            <h4>Mehul Kumar</h4>
+                            <p>Consultant</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about your Digital Twin.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How does the AI Twin learn about me?</span>
+                        <div class="faq-toggle">▼</div>
+                    </div>
+                    <div class="faq-answer">
+                        Your AI Twin learns through multiple channels: your resume, LinkedIn profile, previous writings, voice samples, and direct conversations with you. It uses advanced machine learning to understand your communication style, values, and expertise.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is my personal data secure?</span>
+                        <div class="faq-toggle">▼</div>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, we use enterprise-grade encryption and comply with GDPR, CCPA, and other privacy regulations. Your data is stored securely and never shared with third parties without your explicit consent.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I customize how my AI Twin responds?</span>
+                        <div class="faq-toggle">▼</div>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely! You can customize tone, response style, specific knowledge domains, and conversation guidelines. Your twin adapts to how you want to be represented.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What happens if I want to delete my AI Twin?</span>
+                        <div class="faq-toggle">▼</div>
+                    </div>
+                    <div class="faq-answer">
+                        You can delete your AI Twin anytime. All associated data will be permanently removed from our servers within 30 days, in accordance with our data retention policy.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I integrate it with my existing website?</span>
+                        <div class="faq-toggle">▼</div>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! We provide easy-to-implement embed codes for WordPress, Webflow, and custom websites. Our API also allows deep integration for advanced use cases.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">Digital Twin Profile</div>
+            <div class="footer-copyright">© 2024 Digital Twin Profile. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // AppScript URL
+        const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxdzurMsfcUngGcN0s0ZQSbXM3iQvUwBtmqZTr170EKrjFtll89Wm6scbc2IBiCnQybw/exec";
+
+        // Chat Demo
+        const chatMessages = [
+            "That's a great question! I believe in user-centric design that prioritizes accessibility and usability.",
+            "Great question! I'd say that continuous learning and staying updated with latest trends is key.",
+            "Absolutely! Building meaningful connections and providing value should always be the priority.",
+            "I think it's about balancing innovation with practicality to create real impact."
+        ];
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const messagesContainer = document.getElementById('chatMessages');
+                
+                // User message
+                const userDiv = document.createElement('div');
+                userDiv.className = 'chat-message user-message';
+                userDiv.innerHTML = '<div class="chat-avatar user-avatar">U</div><div class="message-content">' + message + '</div>';
+                messagesContainer.appendChild(userDiv);
+                
+                input.value = '';
+                input.focus();
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const aiDiv = document.createElement('div');
+                    aiDiv.className = 'chat-message ai-message';
+                    const response = chatMessages[Math.floor(Math.random() * chatMessages.length)];
+                    aiDiv.innerHTML = '<div class="message-content">' + response + '</div><div class="chat-avatar ai-avatar">AI</div>';
+                    messagesContainer.appendChild(aiDiv);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 600);
+                
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+
+        // Allow Enter key in chat
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+            }
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const item = element.parentElement;
+            item.classList.toggle('active');
+        }
+
+        // Form Submission
+        function submitForm() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const formMessage = document.getElementById('formMessage');
+            const submitBtn = document.querySelector('.btn-pricing');
+
+            // Validation
+            if (!name || !email || !phone) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            if (!validatePhone(phone)) {
+                showError('Please enter a valid 10-digit phone number');
+                return;
+            }
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
+            // Build URL with form data
+            const url = APPSCRIPT_URL + "?" + new URLSearchParams({
+                name: name,
+                email: email,
+                phone: phone
+            }).toString();
+
+            // Send data using fetch with GET and no-cors
+            fetch(url, {
+                method: "GET",
+                mode: "no-cors"
+            })
+            .then(() => {
+                // Success response handling
+                showSuccess('Form submitted successfully! Redirecting to payment...');
+                submitBtn.textContent = 'Access Trial & Pay ₹1';
+                submitBtn.disabled = false;
+                
+                // Clear form
+                document.getElementById('aiForm').reset();
+                
+                // Redirect to payment
+                setTimeout(() => {
+                    window.location.href = 'https://payments.cashfree.com/forms/getaudit';
+                }, 2000);
+            })
+            .catch(() => {
+                // In no-cors mode, we treat any response as success
+                showSuccess('Form submitted successfully! Redirecting to payment...');
+                submitBtn.textContent = 'Access Trial & Pay ₹1';
+                submitBtn.disabled = false;
+                
+                // Clear form
+                document.getElementById('aiForm').reset();
+                
+                // Redirect to payment
+                setTimeout(() => {
+                    window.location.href = 'https://payments.cashfree.com/forms/getaudit';
+                }, 2000);
+            });
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^\d{10}$/;
+            return re.test(phone.replace(/\D/g, ''));
+        }
+
+        function showSuccess(message) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.className = 'form-message success';
+            formMessage.textContent = message;
+        }
+
+        function showError(message) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.className = 'form-message error';
+            formMessage.textContent = message;
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
